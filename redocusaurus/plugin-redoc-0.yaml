@@ -5,34 +5,31 @@ info:
 servers:
   - url: http:/{https://recruiting-api-dev.mindkey.com/
 tags:
-  - name: Vacancy List
-  - name: Vacancy List > Detailed
-  - name: Vacancy List > Simple
-  - name: Vacancy List > Simple > Filters
-  - name: Vacancy Details
-  - name: Basic
-  - name: Old
-  - name: Lookups
-  - name: Job Agents
-  - name: Candidates
+  - name: Vacancy
+  - name: Job Agent
+  - name: Candidate
 paths:
   /{recruiting_customer_id}/vacancies/detailed:
     get:
       tags:
-        - Basic
+        - Vacancy
       summary: Get All Vacancies - Detailed
+      description: Retrieves all the vacancies in detail.
       parameters:
         - name: X-MindKey-User-Language
+          description: Specifies the User Language.
           in: header
           schema:
             type: string
           example: en-US
         - name: Origin
+          description: Indicates the origin
           in: header
           schema:
             type: string
           example: http://localhost:8080
         - name: recruiting_customer_id
+          description: A unique ID that identifies the customer
           in: path
           schema:
             type: string
@@ -105,20 +102,24 @@ paths:
   /{recruiting_customer_id}/vacancies/simple:
     get:
       tags:
-        - Basic
+        - Vacancy
       summary: Get All Vacancies - Simple
+      description: Retrieves all the vacancies.
       parameters:
         - name: X-MindKey-User-Language
+          description: Specifies the User Language.
           in: header
           schema:
             type: string
-          example: da-DK
+          example: en-US
         - name: Origin
+          description: Indicates the origin
           in: header
           schema:
             type: string
           example: http://localhost:8080
         - name: recruiting_customer_id
+          description: A unique ID that identifies the customer
           in: path
           schema:
             type: string
@@ -131,20 +132,24 @@ paths:
   /{recruiting_customer_id}/vacancies/configuration/list:
     get:
       tags:
-        - Vacancy List
+        - Vacancy
       summary: Vacancy List Configuration
+      description: Specifies the configuraion of Vacancy List.
       parameters:
         - name: X-MindKey-User-Language
+          description: Specifies the User Language.
           in: header
           schema:
             type: string
-          example: da-DK
+          example: en-US
         - name: Origin
+          description: Indicates the origin
           in: header
           schema:
             type: string
           example: http://localhost:8080
         - name: recruiting_customer_id
+          description: A unique ID that identifies the customer
           in: path
           schema:
             type: string
@@ -157,25 +162,30 @@ paths:
   /{recruiting_customer_id}/vacancies/Roti-1:
     get:
       tags:
-        - Vacancy Details
+        - Vacancy
       summary: Get Vacancy Details - ExcludeAdvertisementText
+      description: Specifies vacancy details without the advertisement text.
       parameters:
         - name: X-MindKey-User-Language
+          description: Specifies the User Language.
           in: header
           schema:
             type: string
-          example: da-dk
+          example: en-US
         - name: Origin
+          description: Indicates the origin
           in: header
           schema:
             type: string
           example: http://localhost:8080
         - name: IncludeAdvertisementText
+          description: Specifies inclusion of advertisement text
           in: query
           schema:
             type: boolean
           example: 'false'
         - name: recruiting_customer_id
+          description: A unique ID that identifies the customer.
           in: path
           schema:
             type: string
@@ -188,20 +198,24 @@ paths:
   /{recruiting_customer_id}/vacancies/AdvertisementText/Roti-1:
     get:
       tags:
-        - Vacancy Details
+        - Vacancy
       summary: Get Vacancy AdvertisementText
+      description: Retrieves Vacancy Advertisement Text.
       parameters:
         - name: X-MindKey-User-Language
+          description: Specifies the User Language.
           in: header
           schema:
             type: string
-          example: da-dk
+          example: en-US
         - name: Origin
+          description: Indicates the origin.
           in: header
           schema:
             type: string
           example: http://localhost:8080
         - name: recruiting_customer_id
+          description: A unique ID that identifies the customer.
           in: path
           schema:
             type: string
@@ -214,20 +228,24 @@ paths:
   /{recruiting_customer_id}/vacancies/configuration/details:
     get:
       tags:
-        - Vacancy Details
+        - Vacancy
       summary: Vacancy Details Configuration
+      description: Specifies the configuration of vacancy details.
       parameters:
         - name: X-MindKey-User-Language
+          description: Specifies the User language.
           in: header
           schema:
             type: string
-          example: da-DK
+          example: en-US
         - name: Origin
+          description: Indicates the origin.
           in: header
           schema:
             type: string
           example: http://localhost:8080
         - name: recruiting_customer_id
+          description: A unique ID that identifies the customer.
           in: path
           schema:
             type: string
@@ -240,8 +258,8 @@ paths:
   /{recruiting_customer_id}/jobAlerts:
     post:
       tags:
-        - Old
-      summary: CreateJobAlert (Invalid Mail)
+        - Job Alert
+      summary: Create Job Alert
       requestBody:
         content:
           '*/*':
@@ -476,7 +494,7 @@ paths:
   /{recruiting_customer_id}/job-agents/types/JobAgent:
     get:
       tags:
-        - Job Agents
+        - Job Agent
       summary: Get Job Agent Type
       parameters:
         - name: X-MindKey-User-Language
@@ -490,6 +508,7 @@ paths:
             type: string
           example: http://localhost:8080
         - name: recruiting_customer_id
+          description: A unique ID that identifies the customer.
           in: path
           schema:
             type: string
@@ -502,8 +521,9 @@ paths:
   /{recruiting_customer_id}/job-agents/create/JobAgent:
     post:
       tags:
-        - Job Agents
+        - Job Agent
       summary: Create Job Agent
+      description: Specifies the creation of job agent.
       requestBody:
         content:
           application/json:
@@ -522,16 +542,19 @@ paths:
                   - Byggekonst
       parameters:
         - name: X-MindKey-User-Language
+          description: Specifies the user language.
           in: header
           schema:
             type: string
-          example: da-dk
+          example: en-US
         - name: Origin
+          description: Indicates the origin.
           in: header
           schema:
             type: string
           example: http://localhost:8080
         - name: recruiting_customer_id
+          description: A unique ID that identifies the customer.
           in: path
           schema:
             type: string
@@ -544,7 +567,7 @@ paths:
   /{recruiting_customer_id}/job-agents/resend-email/JobAgent:
     post:
       tags:
-        - Job Agents
+        - Job Agent
       summary: Resend E-mail
       requestBody:
         content:
@@ -554,16 +577,19 @@ paths:
               example: henriksp@me.com
       parameters:
         - name: X-MindKey-User-Language
+          description: Specifies the User Language.
           in: header
           schema:
             type: string
-          example: da-dk
+          example: en-US
         - name: Origin
+          description: Indicates the origin.
           in: header
           schema:
             type: string
           example: http://localhost:8080
         - name: recruiting_customer_id
+          description: A unique ID that identifies the customer.
           in: path
           schema:
             type: string
@@ -576,7 +602,7 @@ paths:
   /{recruiting_customer_id}/job-agents/activate/JobAgent:
     post:
       tags:
-        - Job Agents
+        - Job Agent
       summary: Activate
       requestBody:
         content:
@@ -642,6 +668,7 @@ paths:
       tags:
         - Job Agents
       summary: Get Job Agent
+      description: Retrieves the job agent type.
       requestBody:
         content:
           application/json:
@@ -653,11 +680,13 @@ paths:
                   A2B31CDDEE6EC49805F29EE9929A28DFDAF4CB3C9197868CD175979CC70B0B06
       parameters:
         - name: X-MindKey-User-Language
+          description: Specifies the User Language.
           in: header
           schema:
             type: string
           example: da-dk
         - name: Origin
+          description: Indicates the origin.
           in: header
           schema:
             type: string
