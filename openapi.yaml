@@ -11,16 +11,697 @@ info:
 servers:
 - url: https://recruiting-api.mindkey.com
   description: Production API
-  tags:
-- name: Vacancy
-  description: Vacancies are created in the MindKey by HR users, and can be retrieved
-    from the API in order to be displayed on a webpage
-- name: Job Agent
-  description: This is used to retrieve information about a Job Agent Type or to create/update/delete Job Agents.
-- name: Candidate
-  description: This is used to create a new candidate in MindKey connected to a specific vacancy
 paths:
-"/{customerId}/vacancies/detailed":
+  "/{customerId}/candidates":
+    post:
+      tags:
+      - Candidate
+      summary: Create a new candidate.
+      description: Allows the creation of a new candidate.
+      parameters:
+      - name: customerId
+        in: path
+        description: A unique UUID value that identifies the customer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-MindKey-User-Language
+        in: header
+        description: Specify User UI Language.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Culture
+        in: header
+        description: Specify User UI Culture.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Timezone
+        in: header
+        description: Specify user timezone.
+        schema:
+          type: string
+          default: Europe/Copenhagen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateCandidatesRequest"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/CreateCandidatesRequest"
+        '400':
+          description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
+  "/{customerId}/candidates/types/{candidateApplicationFormTypeId}":
+    get:
+      tags:
+      - Candidate
+      summary: Get Candidate Application Type
+      description: Get the setup for a Candidate Application Form Type.
+      parameters:
+      - name: customerId
+        in: path
+        description: A unique UUID value that identifies the customer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: candidateApplicationFormTypeId
+        in: path
+        description: Retrieves the Id of Candidate Application Form Type. 
+        required: true
+        schema:
+          type: string
+      - name: X-MindKey-User-Language
+        in: header
+        description: Specify User UI Language.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Culture
+        in: header
+        description: Specify User UI Culture.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Timezone
+        in: header
+        description: Specify user timezone.
+        schema:
+          type: string
+          default: Europe/Copenhagen
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/CandidateUploadModel"
+        '400':
+          description: Bad request provided
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  "/{customerId}/candidates/lookup/mailingtemplates":
+    get:
+      tags:
+      - Candidate
+      summary: Mailing Templates
+      description: Retrieves a list of supported mailing templates.
+      parameters:
+      - name: customerId
+        in: path
+        description: A unique UUID value that identifies the customer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-MindKey-User-Language
+        in: header
+        description: Specify User UI Language.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Culture
+        in: header
+        description: Specify User UI Culture.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Timezone
+        in: header
+        description: Specify user timezone.
+        schema:
+          type: string
+          default: Europe/Copenhagen
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/CandidateMailingTemplate"
+        '400':
+          description: Bad request provided
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  "/{customerId}/candidates/lookup":
+    get:
+      tags:
+      - Candidate
+      summary: Lookup Data Specific
+      description: Get lookup data to be used for creating a candidate.
+      parameters:
+      - name: customerId
+        in: path
+        description: A unique UUID value that identifies the customer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: IsDefault
+        description: Specify the use of default value.
+        in: query
+        schema:
+          type: boolean
+      - name: IncludeCountry
+        description: Indicates inclusion of country.
+        in: query
+        schema:
+          type: boolean
+      - name: IncludeNationality
+        description: Indicates inclusion of Nationality.
+        in: query
+        schema:
+          type: boolean
+      - name: IncludeDocumentFileType
+        description: Indicates inclusion of Document File Type.
+        in: query
+        schema:
+          type: boolean
+      - name: IncludeCulture
+        description: Indicates inclusion of culture.
+        in: query
+        schema:
+          type: boolean
+      - name: X-MindKey-User-Language
+        in: header
+        description: Specify User UI Language.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Culture
+        in: header
+        description: Specify User UI Culture.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Timezone
+        in: header
+        description: Specify user timezone.
+        schema:
+          type: string
+          default: Europe/Copenhagen
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/LookupData"
+        '400':
+          description: Bad request provided
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  "/{customerId}/job-agents/types/{jobAgentTypeId}":
+    get:
+      tags:
+      - Job Agent
+      summary: Get Job Agent Type
+      description: Retrieves the type of job agent.
+      parameters:
+      - name: customerId
+        in: path
+        description: A unique UUID value that identifies the customer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: jobAgentTypeId
+        in: path
+        description: Retrieves the job agent type Id.
+        required: true
+        schema:
+          type: string
+      - name: X-MindKey-User-Language
+        in: header
+        description: Specify User UI Language.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Culture
+        in: header
+        description: Specify User UI Culture.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Timezone
+        in: header
+        description: Specify user timezone.
+        schema:
+          type: string
+          default: Europe/Copenhagen
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/JobAgentType"
+        '400':
+          description: Bad request provided
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  "/{customerId}/job-agents/create/{jobAgentTypeId}":
+    post:
+      tags:
+      - Job Agent
+      summary: Create Job Agent
+      description: Allows the creation of a job agent.
+      parameters:
+      - name: customerId
+        in: path
+        description: A unique UUID value that identifies the customer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: jobAgentTypeId
+        in: path
+        description: Retreives the Job Agent Type Id.
+        required: true
+        schema:
+          type: string
+      - name: X-MindKey-User-Language
+        in: header
+        description: Specify User UI Language.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Culture
+        in: header
+        description: Specify User UI Culture.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Timezone
+        in: header
+        description: Specify user timezone.
+        schema:
+          type: string
+          default: Europe/Copenhagen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/JobAgent"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/JobAgent"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/JobAgent"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JobAgentGet"
+        '400':
+          description: Bad request provided
+        '409':
+          description: Job agent already exists
+        '500':
+          description: Internal Server Error occured
+  "/{customerId}/job-agents/resend-email/{jobAgentTypeId}":
+    post:
+      tags:
+      - Job Agent
+      summary: Resend E-mail
+      description: Resends E-mail subscription to the Job Agent.
+      parameters:
+      - name: customerId
+        in: path
+        description: A unique UUID value that identifies the customer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: jobAgentTypeId
+        in: path
+        description: Retreives the Job Agent Type Id.
+        required: true
+        schema:
+          type: string
+      - name: X-MindKey-User-Language
+        in: header
+        description: Specify User UI Language.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Culture
+        in: header
+        description: Specify User UI Culture.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Timezone
+        in: header
+        description: Specify user timezone.
+        schema:
+          type: string
+          default: Europe/Copenhagen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+          text/json:
+            schema:
+              type: string
+          application/*+json:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Subscription mail has been send to Job Agent
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JobAgent"
+        '400':
+          description: Bad request provided
+        '500':
+          description: Internal Server Error occured
+  "/{customerId}/job-agents/activate/{jobAgentTypeId}":
+    post:
+      tags:
+      - Job Agent
+      summary: Activate
+      description: Activates the Job Agent.
+      parameters:
+      - name: customerId
+        in: path
+        description: A unique UUID value that identifies the customer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: jobAgentTypeId
+        in: path
+        description: Retrieves the Job Agent Type Id.
+        required: true
+        schema:
+          type: string
+      - name: X-MindKey-User-Language
+        in: header
+        description: Specify User UI Language.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Culture
+        in: header
+        description: Specify User UI Culture.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Timezone
+        in: header
+        description: Specify user timezone.
+        schema:
+          type: string
+          default: Europe/Copenhagen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+          text/json:
+            schema:
+              type: string
+          application/*+json:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Subscription mail has been send to Job Agent
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JobAgent"
+        '400':
+          description: Bad request provided
+        '500':
+          description: Internal Server Error occured
+  "/{customerId}/job-agents/{jobAgentTypeId}":
+    post:
+      tags:
+      - Job Agent
+      summary: Get Job Agent
+      description: Get a job agent by Job Agent Id.
+      parameters:
+      - name: customerId
+        in: path
+        description: A unique UUID value that identifies the customer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: jobAgentTypeId
+        in: path
+        description: Retrieves Job Agent Id.
+        required: true
+        schema:
+          type: string
+      - name: X-MindKey-User-Language
+        in: header
+        description: Specify User UI Language.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Culture
+        in: header
+        description: Specify User UI Culture.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Timezone
+        in: header
+        description: Specify user timezone.
+        schema:
+          type: string
+          default: Europe/Copenhagen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/JobAgentGet"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/JobAgentGet"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/JobAgentGet"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JobAgent"
+        '400':
+          description: Bad request provided
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+      - Job Agent
+      summary: Update Job Agent
+      description: Revise job agent with latest updates.
+      parameters:
+      - name: customerId
+        in: path
+        description: A unique UUID value that identifies the customer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: jobAgentTypeId
+        in: path
+        description: Retrieves Job Agent Type Id.
+        required: true
+        schema:
+          type: string
+      - name: X-MindKey-User-Language
+        in: header
+        description: Specify User UI Language.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Culture
+        in: header
+        description: Specify User UI Culture.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Timezone
+        in: header
+        description: Specify user timezone.
+        schema:
+          type: string
+          default: Europe/Copenhagen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/JobAgentUpdate"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/JobAgentUpdate"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/JobAgentUpdate"
+      responses:
+         '200':
+          description: Job Agent Updated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JobAgentUpdate"
+         '400':
+          description: Bad request provided
+         '404':
+          description: Job Agent was not found
+         '500':
+          description: Internal Server Error occured
+    delete:
+      tags:
+      - Job Agent
+      summary: Delete Job Agent
+      description: Deletes the Job Agent.
+      parameters:
+      - name: customerId
+        in: path
+        description: A unique UUID value that identifies the customer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: jobAgentTypeId
+        in: path
+        description: Retrieves Job Agent Type Id.
+        required: true
+        schema:
+          type: string
+      - name: X-MindKey-User-Language
+        in: header
+        description: Specify User UI Language.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Culture
+        in: header
+        description: Specify User UI Culture.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Timezone
+        in: header
+        description: Specify user timezone.
+        schema:
+          type: string
+          default: Europe/Copenhagen
+      responses:
+        '200':
+          description: Job Agent deleted.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JobAgentUpdate"
+        '400':
+          description: Bad request provided
+        '404':
+          description: Job Agent was not found
+        '500':
+          description: Internal Server Error
+  "/{customerId}/job-agents/configuration":
+    get:
+      tags:
+      - Job Agent
+      summary: Get Job Agent Configuration
+      description: Get configuration for the job agent.
+      parameters:
+      - name: customerId
+        in: path
+        description: A unique UUID value that identifies the customer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-MindKey-User-Language
+        in: header
+        description: Specify User UI Language.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Culture
+        in: header
+        description: Specify User UI Culture.
+        schema:
+          type: string
+          default: en-us
+      - name: X-MindKey-User-Timezone
+        in: header
+        description: Specify user timezone.
+        schema:
+          type: string
+          default: Europe/Copenhagen
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JobAgentConfiguration"
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  "/{customerId}/vacancies/detailed":
     get:
       tags:
       - Vacancy
@@ -28,8 +709,8 @@ paths:
       description: Retrieves all the vacancies in detail.
       parameters:
       - name: customerId
-        description: A unique ID that identifies the customer.
         in: path
+        description: A unique ID that identifies the customer.
         required: true
         schema:
           type: string
@@ -50,7 +731,7 @@ paths:
         schema:
           type: string
       - name: VacancyAreaName
-        description: Determines the vacancy area neame.
+        description: Determines the vacancy area name.
         in: query
         schema:
           type: string
@@ -77,7 +758,7 @@ paths:
         schema:
           type: boolean
       - name: PerDate
-        description: Specifies the date.
+        description: Specifies the date and time.
         in: query
         schema:
           type: string
@@ -99,19 +780,19 @@ paths:
           "$ref": "#/components/schemas/EnumVacancyListSortField"
       - name: X-MindKey-User-Language
         in: header
-        description: Specify the UI Language.
+        description: Specifies the User UI Language.
         schema:
           type: string
           default: en-us
       - name: X-MindKey-User-Culture
         in: header
-        description: Specify User UI Culture
+        description: Specifies the User UI Culture.
         schema:
           type: string
           default: en-us
       - name: X-MindKey-User-Timezone
         in: header
-        description: Specify the User Timezone.
+        description: Specifies the user timezone.
         schema:
           type: string
           default: Europe/Copenhagen
@@ -130,16 +811,16 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
-    "/{customerId}/vacancies/simple":
-      get:
+  "/{customerId}/vacancies/simple":
+    get:
       tags:
       - Vacancy
-      summary: Get All Vacancies - Simple
+      summary: Get All Vacancies - Simple.
       description: Retrieves all the vacancies.
       parameters:
       - name: customerId
         in: path
-        description: A unique ID that identifies the customer.
+        description: A unique UUID value that identifies the customer.
         required: true
         schema:
           type: string
@@ -228,10 +909,18 @@ paths:
         schema:
           type: boolean
       - name: Unsolicited
-        description: Displays desired vacancies through customizable ".EnumVacancyListSortField"
+        description: Displays desired vacancies through customizable options.
+        in: query
+        schema:
+          "$ref": "#/components/schemas/EnumVacancyListUnsolicited"
+      - name: SortField
+        description: Sorts the vacany list.
+        in: query
+        schema:
+          "$ref": "#/components/schemas/EnumVacancyListSortField"
       - name: X-MindKey-User-Language
         in: header
-        description: Specify UI Language
+        description: Specify User UI Language.
         schema:
           type: string
           default: en-us
@@ -243,7 +932,7 @@ paths:
           default: en-us
       - name: X-MindKey-User-Timezone
         in: header
-        description: Specify he User timezone.
+        description: Specify user timezone.
         schema:
           type: string
           default: Europe/Copenhagen
@@ -271,26 +960,26 @@ paths:
       parameters:
       - name: customerId
         in: path
-        description: A unique ID that identifies the customer.
+        description: A unique UUID value that identifies the customer.
         required: true
         schema:
           type: string
           format: uuid
       - name: X-MindKey-User-Language
         in: header
-        description: Specify User UI Language
+        description: Specify User UI Language.
         schema:
           type: string
           default: en-us
       - name: X-MindKey-User-Culture
         in: header
-        description: Specify User UI Culture
+        description: Specify User UI Culture.
         schema:
           type: string
           default: en-us
       - name: X-MindKey-User-Timezone
         in: header
-        description: Specify the user timezone.
+        description: Specify user timezone.
         schema:
           type: string
           default: Europe/Copenhagen
@@ -301,11 +990,13 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/VacancyListConfiguration"
+        '400':
+          description: Bad request provided        
         '404':
           description: Not Found
         '500':
           description: Internal Server Error
-     "/{customerId}/vacancies/{vacancyId}":
+  "/{customerId}/vacancies/{vacancyId}":
     get:
       tags:
       - Vacancy
@@ -314,7 +1005,7 @@ paths:
       parameters:
       - name: customerId
         in: path
-        description: A unique ID that identifies the customer
+        description: A unique UUID value that identifies the customer.
         required: true
         schema:
           type: string
@@ -326,25 +1017,25 @@ paths:
         schema:
           type: string
       - name: IncludeAdvertisementText
-        description: Specifies inclusion of advertisement text
+        description: Specifies inclusion of advertisement text.
         in: query
         schema:
           type: boolean
       - name: X-MindKey-User-Language
         in: header
-        description: Specify User UI Language
+        description: Specify User UI Language.
         schema:
           type: string
           default: en-us
       - name: X-MindKey-User-Culture
         in: header
-        description: Specify User UI Culture
+        description: Specify User UI Culture.
         schema:
           type: string
           default: en-us
       - name: X-MindKey-User-Timezone
         in: header
-        description: Specify the user timezone.
+        description: Specify user timezone.
         schema:
           type: string
           default: Europe/Copenhagen
@@ -361,7 +1052,7 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
-    "/{customerId}/vacancies/AdvertisementText/{vacancyId}":
+  "/{customerId}/vacancies/AdvertisementText/{vacancyId}":
     get:
       tags:
       - Vacancy
@@ -370,7 +1061,7 @@ paths:
       parameters:
       - name: customerId
         in: path
-        description: A unique that identifies the customer.
+        description: A unique UUID value that identifies the customer.
         required: true
         schema:
           type: string
@@ -383,19 +1074,19 @@ paths:
           type: string
       - name: X-MindKey-User-Language
         in: header
-        description: Specify User UI Language
+        description: Specify User UI Language.
         schema:
           type: string
           default: en-us
       - name: X-MindKey-User-Culture
         in: header
-        description: Specify User UI Culture
+        description: Specify User UI Culture.
         schema:
           type: string
           default: en-us
       - name: X-MindKey-User-Timezone
         in: header
-        description: Specify the user timezone.
+        description: Specify user timezone.
         schema:
           type: string
           default: Europe/Copenhagen
@@ -405,7 +1096,7 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                "$ref": "#/components/schemas/VacancyModelDetailed"
         '400':
           description: Bad request provided
         '404':
@@ -421,26 +1112,26 @@ paths:
       parameters:
       - name: customerId
         in: path
-        description: A unique that identifies the customer.
+        description: A unique UUID value that identifies the customer.
         required: true
         schema:
           type: string
           format: uuid
       - name: X-MindKey-User-Language
         in: header
-        description: Specify User UI Language
+        description: Specify User UI Language.
         schema:
           type: string
           default: en-us
       - name: X-MindKey-User-Culture
         in: header
-        description: Specify User UI Culture
+        description: Specify User UI Culture.
         schema:
           type: string
           default: en-us
       - name: X-MindKey-User-Timezone
         in: header
-        description: Specify the User timezone.
+        description: Specify user timezone.
         schema:
           type: string
           default: Europe/Copenhagen
@@ -455,675 +1146,6 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
-   "/{customerId}/candidates":
-    post:
-      tags:
-      - Candidate
-      summary: Create a new candidate.
-      parameters:
-      - name: customerId
-        in: path
-        description: A unique UUID value that identifies the customer.
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: X-MindKey-User-Language
-        in: header
-        description: Specify User UI Language
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Culture
-        in: header
-        description: Specify User UI Culture
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Timezone
-        in: header
-        description: Specify timezone.
-        schema:
-          type: string
-          default: Europe/Copenhagen
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateCandidatesRequest"
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: boolean
-        '400':
-          description: Bad request provided
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ApiErrorResult"
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ApiErrorResult"
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ApiErrorResult"
-  "{customerId}/candidates/lookup/mailingtemplates":
-    get:
-      tags:
-      - Candidate
-      summary: Get a list of supported mailing templates.
-      parameters:
-      - name: customerId
-        in: path
-        description: A unique UUID value that identifies the customer.
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: X-MindKey-User-Language
-        in: header
-        description: Specify User UI Language
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Culture
-        in: header
-        description: Specify User UI Culture
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Timezone
-        in: header
-        description: Specify timezone.
-        schema:
-          type: string
-          default: Europe/Copenhagen
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/CandidateMailingTemplate"
-        '400':
-          description: Bad request provided
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-  "/{customerId}/candidates/lookup":
-    get:
-      tags:
-      - Candidate
-      summary: Get lookup data to be used for creating a candidate.
-      parameters:
-      - name: customerId
-        in: path
-        description: A unique UUID value that identifies the customer.
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: IsDefault
-        in: query
-        schema:
-          type: boolean
-      - name: IncludeCountry
-        in: query
-        schema:
-          type: boolean
-      - name: IncludeNationality
-        in: query
-        schema:
-          type: boolean
-      - name: IncludeDocumentFileType
-        in: query
-        schema:
-          type: boolean
-      - name: IncludeCulture
-        in: query
-        schema:
-          type: boolean
-      - name: X-MindKey-User-Language
-        in: header
-        description: Specify User UI Language
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Culture
-        in: header
-        description: Specify User UI Culture
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Timezone
-        in: header
-        description: Specify timezone.
-        schema:
-          type: string
-          default: Europe/Copenhagen
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/LookupData"
-        '400':
-          description: Bad request provided
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-  "/{customerId}/candidates/types/{candidateApplicationFormTypeId}":
-    get:
-      tags:
-      - Candidate
-      summary: Get the setup for a CandidateApplicationFormType.
-      parameters:
-      - name: customerId
-        in: path
-        description: A unique UUID value that identifies the customer.
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: candidateApplicationFormTypeId
-        in: path
-        description: CandidateApplicationFormTypeId of the CandidateApplicationFormType
-          to get.
-        required: true
-        schema:
-          type: string
-      - name: X-MindKey-User-Language
-        in: header
-        description: Specify User UI Language
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Culture
-        in: header
-        description: Specify User UI Culture
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Timezone
-        in: header
-        description: Specify timezone.
-        schema:
-          type: string
-          default: Europe/Copenhagen
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/JobAgentType"
-        '400':
-          description: Bad request provided
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-  "/{customerId}/job-agents/configuration":
-    get:
-      tags:
-      - JobAgent
-      summary: Get Job Agent Type.
-      description: Specifies the creation of job agent.
-      parameters:
-      - name: customerId
-        in: path
-        description: A unique ID that identifies the customer.
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: X-MindKey-User-Language
-        in: header
-        description: Specify User UI Language
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Culture
-        in: header
-        description: Specify User UI Culture
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Timezone
-        in: header
-        description: Specify the user timezone.
-        schema:
-          type: string
-          default: Europe/Copenhagen
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/JobAgentConfiguration"
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-  "/{customerId}/job-agents/types/{jobAgentTypeId}":
-    get:
-      tags:
-      - JobAgent
-      summary: Get the setup for a JobAgentType.
-      parameters:
-      - name: customerId
-        in: path
-        description: A unique UUID value that identifies the customer.
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: jobAgentTypeId
-        in: path
-        description: JobAgentTypeId of the JobAgentType to get.
-        required: true
-        schema:
-          type: string
-      - name: X-MindKey-User-Language
-        in: header
-        description: Specify User UI Language
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Culture
-        in: header
-        description: Specify User UI Culture
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Timezone
-        in: header
-        description: Specify timezone.
-        schema:
-          type: string
-          default: Europe/Copenhagen
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/JobAgentType"
-        '400':
-          description: Bad request provided
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-  "/{customerId}/job-agents/create/{jobAgentTypeId}":
-    post:
-      tags:
-      - JobAgent
-      summary: Create Job Agent
-      description: Create Job Agent
-      parameters:
-      - name: customerId
-        in: path
-        description: A unique UUID value that identifies the customer.
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: jobAgentTypeId
-        in: path
-        description: JobAgentTypeId of the JobAgentType to get.
-        required: true
-        schema:
-          type: string
-      - name: X-MindKey-User-Language
-        in: header
-        description: Specify User UI Language
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Culture
-        in: header
-        description: Specify User UI Culture
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Timezone
-        in: header
-        description: Specify timezone.
-        schema:
-          type: string
-          default: Europe/Copenhagen
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/JobAgent"
-          text/json:
-            schema:
-              "$ref": "#/components/schemas/JobAgent"
-          application/*+json:
-            schema:
-              "$ref": "#/components/schemas/JobAgent"
-      responses:
-        '200':
-          description: Job Agent created
-        '400':
-          description: Bad request provided
-        '409':
-          description: Job agent already exists
-        '500':
-          description: Internal Server Error occured
-  "/{customerId}/job-agents/activate/{jobAgentTypeId}":
-    post:
-      tags:
-      - JobAgent
-      summary: Activate Job Agent
-      description: Activate Job Agent
-      parameters:
-      - name: customerId
-        in: path
-        description: A unique UUID value that identifies the customer.
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: jobAgentTypeId
-        in: path
-        description: JobAgentTypeId
-        required: true
-        schema:
-          type: string
-      - name: X-MindKey-User-Language
-        in: header
-        description: Specify User UI Language
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Culture
-        in: header
-        description: Specify User UI Culture
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Timezone
-        in: header
-        description: Specify timezone.
-        schema:
-          type: string
-          default: Europe/Copenhagen
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: string
-          text/json:
-            schema:
-              type: string
-          application/*+json:
-            schema:
-              type: string
-      responses:
-        '200':
-          description: Job Agent activated
-        '400':
-          description: Bad request provided
-        '500':
-          description: Internal Server Error occured
-  "/{customerId}/job-agents/resend-email/{jobAgentTypeId}":
-    post:
-      tags:
-      - JobAgent
-      summary: Resend subscription e-mail to Job Agent
-      description: Send subscription e-mail to Job Agent
-      parameters:
-      - name: customerId
-        in: path
-        description: A unique UUID value that identifies the customer.
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: jobAgentTypeId
-        in: path
-        description: JobAgentTypeId.
-        required: true
-        schema:
-          type: string
-      - name: X-MindKey-User-Language
-        in: header
-        description: Specify User UI Language
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Culture
-        in: header
-        description: Specify User UI Culture
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Timezone
-        in: header
-        description: Specify timezone.
-        schema:
-          type: string
-          default: Europe/Copenhagen
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: string
-          text/json:
-            schema:
-              type: string
-          application/*+json:
-            schema:
-              type: string
-      responses:
-        '200':
-          description: Subscription mail has been send to Job Agent
-        '400':
-          description: Bad request provided
-        '500':
-          description: Internal Server Error occured
-  "/{customerId}/job-agents/{jobAgentTypeId}":
-    post:
-      tags:
-      - JobAgent
-      summary: Get a job agent by JobAgentId.
-      parameters:
-      - name: customerId
-        in: path
-        description: A unique UUID value that identifies the customer.
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: jobAgentTypeId
-        in: path
-        description: JobAgentTypeId.
-        required: true
-        schema:
-          type: string
-      - name: X-MindKey-User-Language
-        in: header
-        description: Specify User UI Language
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Culture
-        in: header
-        description: Specify User UI Culture
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Timezone
-        in: header
-        description: Specify timezone.
-        schema:
-          type: string
-          default: Europe/Copenhagen
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/JobAgentGet"
-          text/json:
-            schema:
-              "$ref": "#/components/schemas/JobAgentGet"
-          application/*+json:
-            schema:
-              "$ref": "#/components/schemas/JobAgentGet"
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/JobAgent"
-        '400':
-          description: Bad request provided
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-    put:
-      tags:
-      - JobAgent
-      summary: Update Job Agent
-      description: Update Job Agent
-      parameters:
-      - name: customerId
-        in: path
-        description: A unique UUID value that identifies the customer.
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: jobAgentTypeId
-        in: path
-        description: JobAgentTypeId.
-        required: true
-        schema:
-          type: string
-      - name: X-MindKey-User-Language
-        in: header
-        description: Specify User UI Language
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Culture
-        in: header
-        description: Specify User UI Culture
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Timezone
-        in: header
-        description: Specify timezone.
-        schema:
-          type: string
-          default: Europe/Copenhagen
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/JobAgentUpdate"
-          text/json:
-            schema:
-              "$ref": "#/components/schemas/JobAgentUpdate"
-          application/*+json:
-            schema:
-              "$ref": "#/components/schemas/JobAgentUpdate"
-      responses:
-        '200':
-          description: Job Agent updated
-        '400':
-          description: Bad request provided
-        '404':
-          description: Job Agent was not found
-        '500':
-          description: Internal Server Error occured
-    delete:
-      tags:
-      - JobAgent
-      summary: Delete Job Agent
-      description: Delete Job Agent
-      parameters:
-      - name: customerId
-        in: path
-        description: A unique UUID value that identifies the customer.
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: jobAgentTypeId
-        in: path
-        description: JobAgentTypeId.
-        required: true
-        schema:
-          type: string
-      - name: X-MindKey-User-Language
-        in: header
-        description: Specify User UI Language
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Culture
-        in: header
-        description: Specify User UI Culture
-        schema:
-          type: string
-          default: en-us
-      - name: X-MindKey-User-Timezone
-        in: header
-        description: Specify timezone.
-        schema:
-          type: string
-          default: Europe/Copenhagen
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/JobAgentGet"
-          text/json:
-            schema:
-              "$ref": "#/components/schemas/JobAgentGet"
-          application/*+json:
-            schema:
-              "$ref": "#/components/schemas/JobAgentGet"
-      responses:
-        '200':
-          description: Job Agent deleted
-        '400':
-          description: Bad request provided
-        '404':
-          description: Job Agent was not found
-        '500':
-          description: Internal Server Error occured
-  
-  
- 
-  
-  
 components:
   schemas:
     ApiErrorResult:
@@ -1262,13 +1284,6 @@ components:
           type: string
           description: FormFile
           format: binary
-    encoding:
-      Attachments:
-        style: form
-      Image:
-        style: form
-      Candidate:
-        contentType: application/json
     AttachmentDetailBase:
       type: object
       properties:
@@ -1911,4 +1926,10 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-
+tags:
+- name: Vacancy
+  description: Vacancies are created in the MindKey by HR users, and can be retrieved from the API in order to be displayed on a webpage.
+- name: Job Agent
+  description: Job Agent is used to retrieve information about a Job Agent Type or to create/update/delete Job Agents.
+- name: Candidate
+  description: Candidate is used to create a new candidate in MindKey connected to a specific vacancy.
