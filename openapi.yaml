@@ -61,7 +61,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/CreateCandidatesRequest"
+                "$ref": "#/components/schemas/CandidateUploadModel"
         '400':
           description: Bad request provided
           content:
@@ -119,6 +119,12 @@ paths:
           type: string
           default: Europe/Copenhagen
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
           description: Success
           content:
@@ -129,10 +135,22 @@ paths:
                   "$ref": "#/components/schemas/CandidateUploadModel"
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/candidates/lookup/mailingtemplates":
     get:
       tags:
@@ -166,6 +184,12 @@ paths:
           type: string
           default: Europe/Copenhagen
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
           description: Success
           content:
@@ -176,10 +200,22 @@ paths:
                   "$ref": "#/components/schemas/CandidateMailingTemplate"
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/candidates/lookup":
     get:
       tags:
@@ -238,6 +274,12 @@ paths:
           type: string
           default: Europe/Copenhagen
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
           description: Success
           content:
@@ -246,10 +288,22 @@ paths:
                 "$ref": "#/components/schemas/LookupData"
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/job-agents/types/{jobAgentTypeId}":
     get:
       tags:
@@ -289,20 +343,36 @@ paths:
           type: string
           default: Europe/Copenhagen
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
           description: Success
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/JobAgentType"
+                "$ref": "#/components/schemas/JobAgentType"
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/job-agents/create/{jobAgentTypeId}":
     post:
       tags:
@@ -353,6 +423,12 @@ paths:
             schema:
               "$ref": "#/components/schemas/JobAgent"
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
           description: Success
           content:
@@ -361,10 +437,22 @@ paths:
                 "$ref": "#/components/schemas/JobAgentGet"
         '400':
           description: Bad request provided
-        '409':
-          description: Job agent already exists
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
-          description: Internal Server Error occured
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/job-agents/resend-email/{jobAgentTypeId}":
     post:
       tags:
@@ -415,16 +503,36 @@ paths:
             schema:
               type: string
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
-          description: Subscription mail has been send to Job Agent
+          description: Success
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/JobAgent"
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
-          description: Internal Server Error occured
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/job-agents/activate/{jobAgentTypeId}":
     post:
       tags:
@@ -475,16 +583,36 @@ paths:
             schema:
               type: string
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
-          description: Subscription mail has been send to Job Agent
+          description: Success
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/JobAgent"
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
-          description: Internal Server Error occured
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/job-agents/{jobAgentTypeId}":
     post:
       tags:
@@ -535,6 +663,12 @@ paths:
             schema:
               "$ref": "#/components/schemas/JobAgentGet"
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
           description: Success
           content:
@@ -543,10 +677,22 @@ paths:
                 "$ref": "#/components/schemas/JobAgent"
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
     put:
       tags:
       - Job Agent
@@ -596,18 +742,36 @@ paths:
             schema:
               "$ref": "#/components/schemas/JobAgentUpdate"
       responses:
+         '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
          '200':
-          description: Job Agent Updated.
+          description: Success
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/JobAgentUpdate"
          '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
          '404':
-          description: Job Agent was not found
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
          '500':
-          description: Internal Server Error occured
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
     delete:
       tags:
       - Job Agent
@@ -646,18 +810,36 @@ paths:
           type: string
           default: Europe/Copenhagen
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
-          description: Job Agent deleted.
+          description: Success
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/JobAgentUpdate"
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '404':
-          description: Job Agent was not found
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/job-agents/configuration":
     get:
       tags:
@@ -691,16 +873,36 @@ paths:
           type: string
           default: Europe/Copenhagen
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
           description: Success
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/JobAgentConfiguration"
+        '400':
+          description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/vacancies/detailed":
     get:
       tags:
@@ -797,20 +999,36 @@ paths:
           type: string
           default: Europe/Copenhagen
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
           description: Success
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/VacancyModelDetailed"
+                "$ref": "#/components/schemas/VacancyModelDetailed"
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/vacancies/simple":
     get:
       tags:
@@ -937,20 +1155,36 @@ paths:
           type: string
           default: Europe/Copenhagen
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
           description: Success
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/VacancyModel"
+                "$ref": "#/components/schemas/VacancyModel"
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/vacancies/configuration/list":
     get:
       tags:
@@ -984,6 +1218,12 @@ paths:
           type: string
           default: Europe/Copenhagen
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
           description: Success
           content:
@@ -991,11 +1231,23 @@ paths:
               schema:
                 "$ref": "#/components/schemas/VacancyListConfiguration"
         '400':
-          description: Bad request provided        
+          description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/vacancies/{vacancyId}":
     get:
       tags:
@@ -1040,6 +1292,12 @@ paths:
           type: string
           default: Europe/Copenhagen
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
           description: Success
           content:
@@ -1048,10 +1306,22 @@ paths:
                 "$ref": "#/components/schemas/VacancyModelDetailed"
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/vacancies/AdvertisementText/{vacancyId}":
     get:
       tags:
@@ -1091,6 +1361,12 @@ paths:
           type: string
           default: Europe/Copenhagen
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
           description: Success
           content:
@@ -1099,10 +1375,22 @@ paths:
                 "$ref": "#/components/schemas/VacancyModelDetailed"
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
   "/{customerId}/vacancies/configuration/details":
     get:
       tags:
@@ -1136,16 +1424,36 @@ paths:
           type: string
           default: Europe/Copenhagen
       responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: boolean
         '200':
           description: Success
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/VacancyDetailsConfiguration"
+        '400':
+          description: Bad request provided
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiErrorResult"
 components:
   schemas:
     ApiErrorResult:
