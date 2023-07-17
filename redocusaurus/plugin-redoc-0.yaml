@@ -16,7 +16,7 @@ paths:
       tags:
         - Candidate
       summary: Create a new candidate.
-      description: Allows the creation of a new candidate.
+      description: This endpoint enables users to create a new candidate.
       parameters:
         - name: customerId
           in: path
@@ -27,7 +27,9 @@ paths:
             format: uuid
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter is utilized  to specify the interface language you
+            use within the MindKey application.
           schema:
             type: string
             default: en-us
@@ -54,7 +56,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateCandidatesRequest'
+                type: boolean
+              example: >-
+                Candidate '1dc59dd8-68d1-4ed4-957e-3ff3c27b70b6' has been
+                uploaded for later processing
         '201':
           description: Created
           content:
@@ -84,7 +89,9 @@ paths:
       tags:
         - Candidate
       summary: Get Candidate Application Type
-      description: Get the setup for a Candidate Application Form Type.
+      description: >-
+        This endpoint obtains the setup details for a Candidate Application Form
+        Type.
       parameters:
         - name: customerId
           in: path
@@ -101,7 +108,9 @@ paths:
             type: string
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -128,16 +137,30 @@ paths:
                   $ref: '#/components/schemas/CandidateUploadModel'
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
   /{customerId}/candidates/lookup/mailingtemplates:
     get:
       tags:
         - Candidate
       summary: Mailing Templates
-      description: Retrieves a list of supported mailing templates.
+      description: >-
+        This endpoint allows you to retrieve a collection of supported mailing
+        templates.
       parameters:
         - name: customerId
           in: path
@@ -148,7 +171,9 @@ paths:
             format: uuid
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -175,16 +200,28 @@ paths:
                   $ref: '#/components/schemas/CandidateMailingTemplate'
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
   /{customerId}/candidates/lookup:
     get:
       tags:
         - Candidate
       summary: Lookup Data Specific
-      description: Get lookup data to be used for creating a candidate.
+      description: This endpoint retrieves lookup data used for creating a candidate.
       parameters:
         - name: customerId
           in: path
@@ -220,7 +257,9 @@ paths:
             type: boolean
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -245,16 +284,33 @@ paths:
                 $ref: '#/components/schemas/LookupData'
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: boolean
+              example: >-
+                Number of attachments must match number of attachment document
+                types.
   /{customerId}/job-agents/types/{jobAgentTypeId}:
     get:
       tags:
         - Job Agent
       summary: Get Job Agent Type
-      description: Retrieves the type of job agent.
+      description: >-
+        This endpoint retrieves information about the specific type of job
+        agent.
       parameters:
         - name: customerId
           in: path
@@ -271,7 +327,9 @@ paths:
             type: string
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -293,21 +351,31 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JobAgentType'
+                $ref: '#/components/schemas/JobAgentType'
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
   /{customerId}/job-agents/create/{jobAgentTypeId}:
     post:
       tags:
         - Job Agent
       summary: Create Job Agent
-      description: Allows the creation of a job agent.
+      description: This endpoint enables users to create a new job agent.
       parameters:
         - name: customerId
           in: path
@@ -324,7 +392,9 @@ paths:
             type: string
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -360,16 +430,31 @@ paths:
                 $ref: '#/components/schemas/JobAgentGet'
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '409':
-          description: Job agent already exists
+          description: The job agent has already been created.
+          content:
+            application/json:
+              schema:
+                type: boolean
+              example: Job Agent already exists.
         '500':
-          description: Internal Server Error occured
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
   /{customerId}/job-agents/resend-email/{jobAgentTypeId}:
     post:
       tags:
         - Job Agent
       summary: Resend E-mail
-      description: Resends E-mail subscription to the Job Agent.
+      description: >-
+        This endpoint triggers the re-sending of the email subscription to the
+        Job Agent.
       parameters:
         - name: customerId
           in: path
@@ -386,7 +471,9 @@ paths:
             type: string
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -415,21 +502,31 @@ paths:
               type: string
       responses:
         '200':
-          description: Subscription mail has been send to Job Agent
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/JobAgent'
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '500':
-          description: Internal Server Error occured
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
   /{customerId}/job-agents/activate/{jobAgentTypeId}:
     post:
       tags:
         - Job Agent
       summary: Activate
-      description: Activates the Job Agent.
+      description: >-
+        This endpoint serves the purpose of initiating the activation process
+        for the Job Agent.
       parameters:
         - name: customerId
           in: path
@@ -446,7 +543,9 @@ paths:
             type: string
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -475,21 +574,118 @@ paths:
               type: string
       responses:
         '200':
-          description: Subscription mail has been send to Job Agent
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/JobAgent'
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: boolean
+              example: Job Agent was not found.
         '500':
-          description: Internal Server Error occured
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
+  /{customerId}/job-agents/emailexists/{jobAgentTypeId}:
+    post:
+      tags:
+        - Job Agent
+      summary: Email Exists
+      description: >-
+        This endpoint serves the purpose of verifying the existence of an email
+        address for a Job Agent within the system.
+      parameters:
+        - name: customerId
+          in: path
+          description: A unique UUID value that identifies the customer.
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: jobAgentTypeId
+          in: path
+          description: Retrieves the Job Agent Type Id.
+          required: true
+          schema:
+            type: string
+        - name: X-MindKey-User-Language
+          in: header
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
+          schema:
+            type: string
+            default: en-us
+        - name: X-MindKey-User-Culture
+          in: header
+          description: Specify User UI Culture.
+          schema:
+            type: string
+            default: en-us
+        - name: X-MindKey-User-Timezone
+          in: header
+          description: Specify user timezone.
+          schema:
+            type: string
+            default: Europe/Copenhagen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+          text/json:
+            schema:
+              type: string
+          application/*+json:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+              example: Email already exists within the system.
+        '400':
+          description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: boolean
+              example: Job Agent was not found.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
   /{customerId}/job-agents/{jobAgentTypeId}:
     post:
       tags:
         - Job Agent
-      summary: Get Job Agent
-      description: Get a job agent by Job Agent Id.
+      summary: Get Job Agent by JobAgentId
+      description: >-
+        This endpoint allows you to retrieve a specific job agent by its unique
+        Job Agent Id, providing detailed information
       parameters:
         - name: customerId
           in: path
@@ -506,7 +702,9 @@ paths:
             type: string
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -542,15 +740,30 @@ paths:
                 $ref: '#/components/schemas/JobAgent'
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                type: boolean
+              example: Job Agent was not found.
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
     put:
       tags:
         - Job Agent
       summary: Update Job Agent
-      description: Revise job agent with latest updates.
+      description: >-
+        This endpoint allows the smooth updating of job agent with the latest
+        updates.
       parameters:
         - name: customerId
           in: path
@@ -567,7 +780,9 @@ paths:
             type: string
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -596,22 +811,39 @@ paths:
               $ref: '#/components/schemas/JobAgentUpdate'
       responses:
         '200':
-          description: Job Agent Updated.
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/JobAgentUpdate'
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '404':
-          description: Job Agent was not found
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '500':
-          description: Internal Server Error occured
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: boolean
+              example: >-
+                UpdateJobAgentAsync failed String reference not set to an
+                instance of a String. (Parameter 's')
     delete:
       tags:
         - Job Agent
       summary: Delete Job Agent
-      description: Deletes the Job Agent.
+      description: >-
+        This endpoint facilitates the deletion of the Job Agent, removing it
+        from the system.
       parameters:
         - name: customerId
           in: path
@@ -628,7 +860,9 @@ paths:
             type: string
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -646,23 +880,39 @@ paths:
             default: Europe/Copenhagen
       responses:
         '200':
-          description: Job Agent deleted.
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JobAgentUpdate'
+                type: boolean
+              example: Job Agent is successfully deleted
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '404':
-          description: Job Agent was not found
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: boolean
+              example: Job Agent was not found.
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
   /{customerId}/job-agents/configuration:
     get:
       tags:
         - Job Agent
       summary: Get Job Agent Configuration
-      description: Get configuration for the job agent.
+      description: >-
+        This endpoint obtains the configuration settings associated with the job
+        agent.
       parameters:
         - name: customerId
           in: path
@@ -673,7 +923,9 @@ paths:
             format: uuid
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -698,14 +950,24 @@ paths:
                 $ref: '#/components/schemas/JobAgentConfiguration'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
   /{customerId}/vacancies/detailed:
     get:
       tags:
         - Vacancy
       summary: Get All Vacancies - Detailed
-      description: Retrieves all the vacancies in detail.
+      description: >-
+        This endpoint facilitates the complete retrieval of detailed information
+        regarding all available vacancies.
       parameters:
         - name: customerId
           in: path
@@ -779,7 +1041,9 @@ paths:
             $ref: '#/components/schemas/EnumVacancyListSortField'
         - name: X-MindKey-User-Language
           in: header
-          description: Specifies the User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -801,21 +1065,34 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/VacancyModelDetailed'
+                $ref: '#/components/schemas/VacancyModelDetailed'
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                type: boolean
+              example: Vacancy not found
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
   /{customerId}/vacancies/simple:
     get:
       tags:
         - Vacancy
       summary: Get All Vacancies - Simple.
-      description: Retrieves all the vacancies.
+      description: >-
+        This endpoint allows for the simple retrieval of all the vacancies,
+        providing a basic overview without detailed information.
       parameters:
         - name: customerId
           in: path
@@ -919,7 +1196,9 @@ paths:
             $ref: '#/components/schemas/EnumVacancyListSortField'
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -941,21 +1220,33 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/VacancyModel'
+                $ref: '#/components/schemas/VacancyModel'
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
   /{customerId}/vacancies/configuration/list:
     get:
       tags:
         - Vacancy
       summary: Vacancy List Configuration
-      description: Specifies the configuraion of Vacancy List.
+      description: >-
+        This endpoint enables the customization of the Vacancy List by allowing
+        the specification of its configuration parameters.
       parameters:
         - name: customerId
           in: path
@@ -966,7 +1257,9 @@ paths:
             format: uuid
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -989,18 +1282,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VacancyListConfiguration'
-        '400':
-          description: Bad request provided
         '404':
-          description: Not Found
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
   /{customerId}/vacancies/{vacancyId}:
     get:
       tags:
         - Vacancy
       summary: Get Vacancy Details - ExcludeAdvertisementText
-      description: Specifies vacancy details without the advertisement text.
+      description: >-
+        This endpoint is used to retrieve vacancy details excluding the
+        advertisement text,enabling a focused view on the essential details
+        relevant to each job opportunity.
       parameters:
         - name: customerId
           in: path
@@ -1022,7 +1324,9 @@ paths:
             type: boolean
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -1047,16 +1351,32 @@ paths:
                 $ref: '#/components/schemas/VacancyModelDetailed'
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                type: boolean
+              example: Vacancy was not found
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
   /{customerId}/vacancies/AdvertisementText/{vacancyId}:
     get:
       tags:
         - Vacancy
       summary: Get Vacancy Advertisement Text.
-      description: Retrieves Vacancy Advertisement Text.
+      description: >-
+        This endpoint facilitates the retrieval of the advertisement text
+        associated with a specific vacancy, providing comprehensive information
+        about the job opening.
       parameters:
         - name: customerId
           in: path
@@ -1073,7 +1393,9 @@ paths:
             type: string
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -1098,16 +1420,31 @@ paths:
                 $ref: '#/components/schemas/VacancyModelDetailed'
         '400':
           description: Bad request provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                type: boolean
+              example: Vacancy was not found
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
   /{customerId}/vacancies/configuration/details:
     get:
       tags:
         - Vacancy
       summary: Vacancy Details Configuration.
-      description: Specifies the configuration of vacancy details.
+      description: >-
+        This endpoint enables the configuration of vacancy details by allowing
+        customization of the settings according to your preferences.
       parameters:
         - name: customerId
           in: path
@@ -1118,7 +1455,9 @@ paths:
             format: uuid
         - name: X-MindKey-User-Language
           in: header
-          description: Specify User UI Language.
+          description: >-
+            This parameter specifies the interface language that you use within
+            the MindKey application.
           schema:
             type: string
             default: en-us
@@ -1143,8 +1482,16 @@ paths:
                 $ref: '#/components/schemas/VacancyDetailsConfiguration'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
         '500':
           description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResult'
 components:
   schemas:
     ApiErrorResult:
